@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
 		put(move)
 
-		current_symbol = (lambda: 'X' if current_symbol == 'Y' else 'Y')()
+		current_symbol = (lambda: 'X' if current_symbol == 'O' else 'O')()
 
 		#clearing
 		if is_linux:
