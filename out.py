@@ -33,6 +33,6 @@ if __name__ == "__main__":
 		else:
 			os.system('cls')
 
-	print(f"Winner is {current_symbol}")
+	print(f"Winner is {(lambda: 'X' if current_symbol == 'O' else 'O')()}")
 		
 
