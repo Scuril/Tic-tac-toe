@@ -11,10 +11,10 @@ def clear_console():
 		os.system('cls')
 
 def get_move():
-	move = input()
-	while not re.match("(1|2|3)-(a|b|c)", lower(move)):
+	move = input().upper()
+	while not re.match("(1|2|3)-(A|B|C)", move):
 		print("Please observe format")
-		move = input()
+		move = input().upper()
 	return move
 
 if __name__ == "__main__":
