@@ -1,6 +1,8 @@
 class Game:
 	def __init__(self):
 		self.__move_i = 0
+		self.have_draw = lambda: self.__move_i == 9
+
 		self.current_symbol = 'X'
 		self.game_stats = {
 			"1-A": " ",
@@ -14,6 +16,12 @@ class Game:
 			"3-C": " "
 		}
 
+	def paint_symbol(self, symbol):
+		if symbol == 'X':
+			return f"\033[1;31;40m{symbol}\033[1;30;40m"
+		
+		return f"\033[1;34;40m{symbol}\033[1;30;40m"
+
 	def put(self, postition):
 		if self.game_stats[postition] != " ":
 			return False
@@ -24,10 +32,17 @@ class Game:
 		return True
 
 	def have_winner(self):
-		return (self.game_stats["1-A"] == self.game_stats["1-B"] == self.game_stats["1-C"] != " ") or (self.game_stats["2-A"] == self.game_stats["2-B"] == self.game_stats["2-C"] != " ") or (self.game_stats["3-A"] == self.game_stats["3-B"] == self.game_stats["3-C"] != " ") or (self.game_stats["1-A"] == self.game_stats["2-A"] == self.game_stats["3-A"] != " ") or (self.game_stats["1-B"] == self.game_stats["2-B"] == self.game_stats["3-B"] != " ") or (self.game_stats["1-A"] == self.game_stats["2-B"] == self.game_stats["3-C"] != " ") or (self.game_stats["1-C"] == self.game_stats["2-B"] == self.game_stats["3-A"] != " ")
+		result = [
+			self.game_stats["1-A"] == self.game_stats["1-B"] == self.game_stats["1-C"] != " ",
+			self.game_stats["2-A"] == self.game_stats["2-B"] == self.game_stats["2-C"] != " ",
+			self.game_stats["3-A"] == self.game_stats["3-B"] == self.game_stats["3-C"] != " ",
+			self.game_stats["1-A"] == self.game_stats["2-A"] == self.game_stats["3-A"] != " ",
+			self.game_stats["1-B"] == self.game_stats["2-B"] == self.game_stats["3-B"] != " ",
 
-	def have_draw(self):
-		return self.__move_i == 9
+			self.game_stats["1-A"] == self.game_stats["2-B"] == self.game_stats["3-C"] != " ",
+			self.game_stats["1-C"] == self.game_stats["2-B"] == self.game_stats["3-A"] != " "
+		]
+		return any(result)
 
 	def get_winner(self):
 		if not self.have_winner():
@@ -37,9 +52,9 @@ class Game:
 
 	def print_grid(self):
 		print("  1 2 3")
-		print(f"A {self.game_stats['1-A']} {self.game_stats['2-A']} {self.game_stats['3-A']}")
-		print(f"B {self.game_stats['1-B']} {self.game_stats['2-B']} {self.game_stats['3-B']}")
-		print(f"C {self.game_stats['1-C']} {self.game_stats['2-C']} {self.game_stats['3-C']}")
+		print(f"A {self.paint_symbol(self.game_stats['1-A'])} {self.paint_symbol(self.game_stats['2-A'])} {self.paint_symbol(self.game_stats['3-A'])}")
+		print(f"B {self.paint_symbol(self.game_stats['1-B'])} {self.paint_symbol(self.game_stats['2-B'])} {self.paint_symbol(self.game_stats['3-B'])}")
+		print(f"C {self.paint_symbol(self.game_stats['1-C'])} {self.paint_symbol(self.game_stats['2-C'])} {self.paint_symbol(self.game_stats['3-C'])}")
 
 	def __change_symbol(self, symbol):
 		if symbol == 'X':
