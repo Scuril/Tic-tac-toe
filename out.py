@@ -23,7 +23,12 @@ if __name__ == "__main__":
 			print("Please observe format")
 			move = input()
 
-		put(move)
+		while not put(move):
+			print("Wrong move")
+			move = input()
+			while not re.match("(1|2|3)-(A|B|C)", move):
+				print("Please observe format")
+				move = input()
 
 		current_symbol = (lambda: 'X' if current_symbol == 'O' else 'O')()
 
