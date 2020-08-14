@@ -53,39 +53,39 @@ class Game:
 
 	def is_winner(self, symbol):
 
-		only_zero_x = []
+		only_zero_symbol = []
 
 		for i in range(self.__grid_size):
 			for j in range(self.__grid_size):
 				if self.game_stats[i][j] == symbol and (i == 0 or j == 0):
-					only_zero_x.append((i, j))
+					only_zero_symbol.append((i, j))
 
 		result = []
 
-		for x_pos in only_zero_x:
-			if x_pos[0] - self.__inrow_size >= 0: # north
-				result.append(self.__find_round_x(symbol, x_pos, "n", 1))
+		for symbol_pos in only_zero_symbol:
+			if symbol_pos[0] - self.__inrow_size >= 0: # north
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "n", 1))
 
-			if x_pos[0] - self.__inrow_size >= 0 and x_pos[1] + self.__inrow_size <= self.__grid_size: # north-east
-				result.append(self.__find_round_x(symbol, x_pos, "ne", 1))
+			if symbol_pos[0] - self.__inrow_size >= 0 and symbol_pos[1] + self.__inrow_size <= self.__grid_size: # north-east
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "ne", 1))
 
-			if x_pos[1] + self.__inrow_size <= self.__grid_size: # east
-				result.append(self.__find_round_x(symbol, x_pos, "e", 1))
+			if symbol_pos[1] + self.__inrow_size <= self.__grid_size: # east
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "e", 1))
 
-			if x_pos[0] + self.__inrow_size <= self.__grid_size and x_pos[1] + self.__inrow_size <= self.__grid_size: # south-east
-				result.append(self.__find_round_x(symbol, x_pos, "se", 1))
+			if symbol_pos[0] + self.__inrow_size <= self.__grid_size and symbol_pos[1] + self.__inrow_size <= self.__grid_size: # south-east
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "se", 1))
 
-			if x_pos[0] + self.__inrow_size <= self.__grid_size: # south
-				result.append(self.__find_round_x(symbol, x_pos, "s", 1))
+			if symbol_pos[0] + self.__inrow_size <= self.__grid_size: # south
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "s", 1))
 
-			if x_pos[0] + self.__inrow_size <= self.__grid_size and x_pos[1] - self.__inrow_size >= 0: # south-west
-				result.append(self.__find_round_x(symbol, x_pos, "sw", 1))
+			if symbol_pos[0] + self.__inrow_size <= self.__grid_size and symbol_pos[1] - self.__inrow_size >= 0: # south-west
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "sw", 1))
 
-			if x_pos[1] - self.__inrow_size >= 0: # west
-				result.append(self.__find_round_x(symbol, x_pos, "w", 1))
+			if symbol_pos[1] - self.__inrow_size >= 0: # west
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "w", 1))
 
-			if x_pos[0] - self.__inrow_size >= 0 and x_pos[1] - self.__inrow_size >= 0: # north-west
-				result.append(self.__find_round_x(symbol, x_pos, "nw", 1))
+			if symbol_pos[0] - self.__inrow_size >= 0 and symbol_pos[1] - self.__inrow_size >= 0: # north-west
+				result.append(self.__find_round_symbol(symbol, symbol_pos, "nw", 1))
 			
 
 		return any(result)
@@ -117,56 +117,56 @@ class Game:
 		else:
 			return 'X'
 
-	def __find_round_x(self, symbol, pos, direction, depth):
+	def __find_round_symbol(self, symbol, pos, direction, depth):
 		if depth == self.__inrow_size:
 			return True
 
 		if direction == "n": # north
 			npos = (pos[0]-1, pos[1])
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "n", depth+1)
+				return self.__find_round_symbol(symbol, npos, "n", depth+1)
 			else:
 				return False
 		elif direction == "ne": # north-east
 			npos = (pos[0]-1, pos[1]+1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "ne", depth+1)
+				return self.__find_round_symbol(symbol, npos, "ne", depth+1)
 			else:
 				return False
 		elif direction == "e": # east
 			npos = (pos[0], pos[1]+1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "e", depth+1)
+				return self.__find_round_symbol(symbol, npos, "e", depth+1)
 			else:
 				return False
 		elif direction == "se": # south-east
 			npos = (pos[0]+1, pos[1]+1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "se", depth+1)
+				return self.__find_round_symbol(symbol, npos, "se", depth+1)
 			else:
 				return False
 		elif direction == "s": # south
 			npos = (pos[0]+1, pos[1])
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "s", depth+1)
+				return self.__find_round_symbol(symbol, npos, "s", depth+1)
 			else:
 				return False
 		elif direction == "sw": # south-west
 			npos = (pos[0]+1, pos[1]-1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "sw", depth+1)
+				return self.__find_round_symbol(symbol, npos, "sw", depth+1)
 			else:
 				return False
 		elif direction == "w": # west
 			npos = (pos[0], pos[1]-1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "w", depth+1)
+				return self.__find_round_symbol(symbol, npos, "w", depth+1)
 			else:
 				return False
 		elif direction == "nw": # north-west
 			npos = (pos[0]-1, pos[1]-1)
 			if self.game_stats[npos[0]][npos[1]] == symbol:
-				return self.__find_round_x(symbol, npos, "nw", depth+1)
+				return self.__find_round_symbol(symbol, npos, "nw", depth+1)
 			else:
 				return False
 
