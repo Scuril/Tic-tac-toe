@@ -11,11 +11,11 @@ def clear_console():
 		os.system('cls')
 
 def get_move():
-	move = input().upper()
-	while not re.match("(1|2|3)-(A|B|C)", move):
+	move = re.search("(\d+)-(\w+)", input().upper())
+	while not move:
 		ctext("Please observe format", "red")
-		move = input().upper()
-	return move
+		move = re.search("(1|2|3)-(A|B|C)", input().upper())
+	return (move.group(1), move.group(2))
 
 if __name__ == "__main__":
 	game = Game()
